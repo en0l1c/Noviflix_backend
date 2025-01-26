@@ -1,0 +1,16 @@
+Καθαρισμός και Δημιουργία του JAR:
+./mvnw clean package
+
+Δημιουργία του Docker Image:
+docker build -t noviflix-backend .
+
+(local run: docker run -e SPRING_PROFILES_ACTIVE=prod noviflix-backend)
+
+Tagging του Docker Image (ώστε να το ανεβάσεις στο Docker Hub):
+docker tag noviflix-backend enolic/noviflix-backend
+
+Σύνδεση στο Docker Hub (αν δεν είσαι ήδη συνδεδεμένος):
+docker login
+
+Push του Docker Image στο Docker Hub:
+docker push enolic/noviflix-backend:latest

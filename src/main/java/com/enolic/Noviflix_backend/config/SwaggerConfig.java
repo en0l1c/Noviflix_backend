@@ -21,13 +21,16 @@ public class SwaggerConfig {
         Server server = new Server();
         server.setUrl("http://localhost:8080/api"); // how the baseurl is displayed in inputbox
 
+        Server deployedServer = new Server();
+        deployedServer.setUrl("https://noviflix-backend.onrender.com/api");
+
         return new OpenAPI()
                 .info(new Info()
-                        .title("Novifliiiiix")
+                        .title("Noviflix API")
                         .version("1.0")
-                        .description("Novifliiiiix API")
+                        .description("Here you can find the Noviflix API with all the /endpoints you will need")
                 )
-                .servers(List.of(server));
+                .servers(List.of(deployedServer, server));
     }
 
     @Bean
@@ -45,4 +48,5 @@ public class SwaggerConfig {
             openApi.setPaths(orderedPaths);
         };
     }
+
 }
