@@ -1,12 +1,13 @@
 package com.enolic.Noviflix_backend.service.implementation;
 
-import com.enolic.Noviflix_backend.exception.ResourceNotFoundException;
+import com.enolic.Noviflix_backend.exception.exceptions.ConflictException;
+import com.enolic.Noviflix_backend.exception.exceptions.NoContentException;
+import com.enolic.Noviflix_backend.exception.exceptions.ResourceNotFoundException;
 import com.enolic.Noviflix_backend.model.dto.MovieDTO;
 import com.enolic.Noviflix_backend.model.entity.Movie;
 import com.enolic.Noviflix_backend.repository.MovieRepository;
 import com.enolic.Noviflix_backend.service.interfaces.MovieServiceInterface;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,47 +22,45 @@ public class MovieService implements MovieServiceInterface {
     private final MovieRepository movieRepository;
 
     @Override
-    public ResponseEntity<List<MovieDTO>> getAllMovies() {
+    public List<MovieDTO> getAllMovies() {
         List<Movie> movies = movieRepository.findAll();
         if (movies.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204
+            throw new NoContentException(); // 204
         }
-        // Μετατροπή των Movie σε MovieDTO
+        // convert Movie to MovieDTO
         List<MovieDTO> movieDTOs = movies.stream()
                 .map(MovieDTO::fromEntity)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(movieDTOs); // 200
+        return movieDTOs; // 200
     }
 
     @Override
-    public ResponseEntity<MovieDTO> getMovieById(UUID id) {
+    public MovieDTO getMovieById(UUID id) {
         Movie movie = movieRepository.findById(String.valueOf(id))
                 .orElseThrow(() -> new ResourceNotFoundException("Movie with id <" + id + "> not found.")); // 404
-        return ResponseEntity.ok(MovieDTO.fromEntity(movie)); // 200
+        return MovieDTO.fromEntity(movie); // 200
     }
 
     @Override
-    public ResponseEntity<MovieDTO> addMovie(MovieDTO movieDTO) {
-        // Έλεγχος αν υπάρχει ήδη ταινία με τον ίδιο τίτλο
+    public MovieDTO addMovie(MovieDTO movieDTO) {
+        // check if movie exists with the same title
         if (movieRepository.existsByTitle(movieDTO.getTitle())) {
-            return ResponseEntity.status(409).body(null); // 409 Conflict
+            throw new ConflictException("A movie with this title already exists."); // 409 Conflict
         }
 
-        // Μετατροπή από DTO σε Entity
-        Movie movie = movieDTO.toEntity();
+        Movie movie = movieDTO.toEntity(); // convert from DTO to Entity
+        Movie savedMovie = movieRepository.save(movie); // save the entity
 
-        // Αποθήκευση της οντότητας
-        Movie savedMovie = movieRepository.save(movie);
-
-        // Μετατροπή από Entity σε DTO για την απόκριση
-        return ResponseEntity.status(201).body(MovieDTO.fromEntity(savedMovie)); // 201
+        // convert from Entity to DTO for the response
+        //return ResponseEntity.status(201).body(MovieDTO.fromEntity(savedMovie)); // 201
+        return MovieDTO.fromEntity(savedMovie);
     }
 
     @Override
-    public ResponseEntity<MovieDTO> updateMovie(UUID id, MovieDTO updatedMovieDTO) {
+    public MovieDTO updateMovie(UUID id, MovieDTO updatedMovieDTO) {
         Movie existingMovie = movieRepository.findById(String.valueOf(id))
                 .orElseThrow(() -> new ResourceNotFoundException("Movie with id <" + id + "> not found.")); // 404
-        // Ενημέρωση των δεδομένων της ταινίας
+        // update movie details
         existingMovie.setTitle(updatedMovieDTO.getTitle());
         existingMovie.setDirector(updatedMovieDTO.getDirector());
         existingMovie.setPlot(updatedMovieDTO.getPlot());
@@ -69,30 +68,31 @@ public class MovieService implements MovieServiceInterface {
         existingMovie.setUrl(updatedMovieDTO.getUrl());
 
         Movie savedMovie = movieRepository.save(existingMovie);
-        return ResponseEntity.ok(MovieDTO.fromEntity(savedMovie)); // 200
+        return MovieDTO.fromEntity(savedMovie); // 200
     }
 
     @Override
-    public ResponseEntity<String> deleteMovie(UUID id) {
-        if (movieRepository.existsById(String.valueOf(id))) {
-            movieRepository.deleteById(String.valueOf(id));
-            return ResponseEntity.ok("Movie with id <" + id + "> deleted successfully."); // 200
+    public String deleteMovie(UUID id) {
+        if (!movieRepository.existsById(String.valueOf(id))) {
+            throw new ResourceNotFoundException("Movie with id <" + id + "> not found."); // 404
         }
-        throw new ResourceNotFoundException("Movie with id <" + id + "> not found."); // 404
+        movieRepository.deleteById(String.valueOf(id));
+        return "Movie with id <" + id + "> deleted successfully.";
     }
 
     @Override
-    public ResponseEntity<MovieDTO> getRandomMovie() {
+    public MovieDTO getRandomMovie() {
         List<Movie> movies = movieRepository.findAll();
         if (movies.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204
+            throw new NoContentException(); // 204
         }
         Movie randomMovie = movies.get(new Random().nextInt(movies.size()));
-        return ResponseEntity.ok(MovieDTO.fromEntity(randomMovie)); // 200
+       // return ResponseEntity.ok(MovieDTO.fromEntity(randomMovie)); // 200
+        return MovieDTO.fromEntity(randomMovie);
     }
 
     @Override
-    public ResponseEntity<String> loadMovies() {
+    public String loadMovies() {
         movieRepository.save(new Movie(
                 UUID.randomUUID().toString(),
                 "Inception",
@@ -111,6 +111,34 @@ public class MovieService implements MovieServiceInterface {
                 "https://example.com/matrix.jpg"
         ));
 
-        return ResponseEntity.ok("Movies loaded successfully!"); // 200
+        //return ResponseEntity.ok("Movies loaded successfully!"); // 200
+        return "Movies loaded successfully: " + movieRepository.count();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

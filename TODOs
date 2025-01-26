@@ -1,0 +1,1 @@
+* return className/methodName for the ApiError with more details ( for example if user adds a movie and have an error - return MovieService/addMovie)

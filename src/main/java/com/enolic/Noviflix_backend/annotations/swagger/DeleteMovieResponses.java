@@ -1,4 +1,4 @@
-package com.enolic.Noviflix_backend.annotations;
+package com.enolic.Noviflix_backend.annotations.swagger;
 
 import com.enolic.Noviflix_backend.exception.ApiError;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -20,4 +20,4 @@ import java.lang.annotation.Target;
         @ApiResponse(responseCode = "404", description = "Movie not found.", content = @Content(mediaType = "application/json",
                 schema = @Schema(implementation = ApiError.class))),
 })
-public @interface UpdateMovieResponses {}
+public @interface DeleteMovieResponses {}

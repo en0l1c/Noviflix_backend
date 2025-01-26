@@ -1,5 +1,6 @@
-package com.enolic.Noviflix_backend.annotations;
+package com.enolic.Noviflix_backend.annotations.swagger;
 
+import com.enolic.Noviflix_backend.exception.ApiError;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;

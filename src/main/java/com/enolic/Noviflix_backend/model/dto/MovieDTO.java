@@ -19,18 +19,18 @@ public class MovieDTO {
     private String id;
 
     @NotBlank(message = "Title cannot be empty")
-    @Size(min = 1, max = 100, message = "Title cannot exceed 100 characters")
+    @Size(max = 100, message = "Title cannot exceed 100 characters")
     @Schema(description = "Title of the movie", example = "Inception")
 
     private String title;
 
     @NotBlank(message = "Director cannot be empty")
-    @Size(min = 1, max = 100, message = "Director cannot exceed 100 characters")
+    @Size(max = 100, message = "Director cannot exceed 100 characters")
     @Schema(description = "Director of the movie", example = "Christopher Nolan")
     private String director;
 
     @NotBlank(message = "Plot cannot be empty")
-    @Size(min = 1, max = 255, message = "Plot cannot exceed 255 characters")
+    @Size(max = 255, message = "Plot cannot exceed 255 characters")
     @Schema(description = "Plot of the movie", example = "A thief who steals corporate secrets...")
     private String plot;
 

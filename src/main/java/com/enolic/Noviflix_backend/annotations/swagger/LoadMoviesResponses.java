@@ -1,4 +1,4 @@
-package com.enolic.Noviflix_backend.annotations;
+package com.enolic.Noviflix_backend.annotations.swagger;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

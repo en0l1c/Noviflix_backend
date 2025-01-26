@@ -1,5 +1,8 @@
 package com.enolic.Noviflix_backend.exception;
 
+import com.enolic.Noviflix_backend.exception.exceptions.ConflictException;
+import com.enolic.Noviflix_backend.exception.exceptions.NoContentException;
+import com.enolic.Noviflix_backend.exception.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -27,7 +30,8 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(),
                 "Validation Error",
                 errors.toString(),
-                request.getRequestURI()
+                request.getRequestURI(),
+                new Throwable().getStackTrace()[0].getMethodName()
         );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
@@ -40,7 +44,9 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND.value(),
                 "Not Found",
                 ex.getMessage(),
-                request.getRequestURI()
+                request.getRequestURI(),
+                new Throwable().getStackTrace()[0].getMethodName()
+
         );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiError);
@@ -53,7 +59,9 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(),
                 "Illegal Argument",
                 ex.getMessage(),
-                request.getRequestURI()
+                request.getRequestURI(),
+                new Throwable().getStackTrace()[0].getMethodName()
+
         );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiError);
@@ -66,9 +74,47 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Internal Server Error",
                 ex.getMessage(),
-                request.getRequestURI()
+                request.getRequestURI(),
+                new Throwable().getStackTrace()[0].getMethodName()
+
         );
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(apiError);
     }
+
+    // 409
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ApiError> handleConflictException(ConflictException ex, HttpServletRequest request) {
+        ApiError apiError = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Conflict",
+                ex.getMessage(),
+                request.getRequestURI(),
+                new Throwable().getStackTrace()[0].getMethodName()
+        );
+        return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
+    // 204 - SUCCESS - NO CONTENT
+    @ExceptionHandler(NoContentException.class)
+    public ResponseEntity<Void> handleNoContentException(NoContentException ex) {
+        return ResponseEntity.noContent().build(); // returns 204 (no content)
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
