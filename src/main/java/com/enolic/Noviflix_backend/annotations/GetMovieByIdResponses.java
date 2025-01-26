@@ -1,5 +1,6 @@
 package com.enolic.Noviflix_backend.annotations;
 
+import com.enolic.Noviflix_backend.exception.ApiError;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,8 +16,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "OK."),
-        @ApiResponse(responseCode = "400", description = "Invalid Movie UUID.", content = @Content(mediaType = "")),
-        @ApiResponse(responseCode = "404", description = "Movie not found.", content = @Content(mediaType = "")),
+        @ApiResponse(responseCode = "400", description = "Invalid Movie UUID.", content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = ApiError.class))),
+        @ApiResponse(responseCode = "404", description = "Movie not found.", content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = ApiError.class))),
 })
 public @interface GetMovieByIdResponses {}
 
