@@ -4,25 +4,23 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Paths;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
-import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.PathItem;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.method.HandlerMethod;
-
 import java.util.List;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
 
 @Configuration
 public class SwaggerConfig {
+
+    @Value("${server.url}")
+    private String serverUrl;
+
     @Bean
     OpenAPI customOpenAPI() {
         Server server = new Server();
-        server.setUrl("http://localhost:8080/api"); // how the baseurl is displayed in inputbox
+        server.setUrl(serverUrl);
 
-        Server deployedServer = new Server();
-        deployedServer.setUrl("https://noviflix-backend.onrender.com/api");
 
         return new OpenAPI()
                 .info(new Info()
@@ -30,11 +28,12 @@ public class SwaggerConfig {
                         .version("1.0")
                         .description("Here you can find the Noviflix API with all the /endpoints you will need")
                 )
-                .servers(List.of(deployedServer, server));
+                .servers(List.of(server));
     }
 
     @Bean
     public OpenApiCustomizer customizer() {
+        // taake all the /endpoints and store them to the Paths object
         return openApi -> {
             var paths = openApi.getPaths();
             var orderedPaths = new Paths();
