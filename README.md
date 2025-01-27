@@ -149,14 +149,10 @@ Below are example screenshots of the configuration and API responses:
 
 ### Environment Variables Configuration on Render.com
 
-![Render Environment Variables](<img src="screenshots/render-environment-variables.png" alt="Screenshot 1" width="200"/>)
+<img src="screenshots/render-environment-variables.png" alt="Screenshot 1" width="200"/>
 
 ### Swagger Documentation Example
 
-![Swagger UI Example](<img src="screenshots/swagger.png" alt="Screenshot 1" width="200"/>)
-![Swagger UI Example](<img src="screenshots/localhost-swagger.png" alt="Screenshot 1" width="200"/>)
-
-## Conclusion
-
-Noviflix Backend is a robust and scalable API for managing movies. With support for Docker, PostgreSQL, and detailed error handling, it is designed for both development and production environments.
+<img src="screenshots/swagger.png" alt="Screenshot 1" width="200"/>
+<img src="screenshots/localhost-swagger.png" alt="Screenshot 1" width="200"/>
 
