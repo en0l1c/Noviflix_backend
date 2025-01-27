@@ -149,10 +149,10 @@ Below are example screenshots of the configuration and API responses:
 
 ### Environment Variables Configuration on Render.com
 
-<img src="screenshots/render-environment-variables.png" alt="Screenshot 1" width="200"/>
+<img src="screenshots/render-environment-variables.png" alt="Screenshot 1" width="500"/>
 
 ### Swagger Documentation Example
 
-<img src="screenshots/swagger.png" alt="Screenshot 1" width="200"/>
-<img src="screenshots/localhost-swagger.png" alt="Screenshot 1" width="200"/>
+<img src="screenshots/swagger.png" alt="Screenshot 1" width="500"/>
+<img src="screenshots/localhost-swagger.png" alt="Screenshot 1" width="500"/>
 
