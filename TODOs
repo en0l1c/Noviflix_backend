@@ -1,1 +1,3 @@
 * return className/methodName for the ApiError with more details ( for example if user adds a movie and have an error - return MovieService/addMovie)
+* when access noviflix-backend.onrender.com it shows the ApiError object
+* check for case sensitivity when a user tries to add a movie with same title.
