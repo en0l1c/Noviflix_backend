@@ -19,7 +19,6 @@ Noviflix Backend is a movie management API that allows users to manage a movie d
 The API is documented using Swagger. You can access the API documentation at the following URL:
 
 [Noviflix API Documentation](https://konstantinosgialantzis.github.io/portfolio/noviflix/swagger-ui)
-
 ## Environment Configuration
 
 To ensure proper functionality, the following environment variables must be set:
@@ -141,7 +140,8 @@ Custom Swagger annotations are used to improve the appearance of status codes an
 
 ## Releases
 
-The latest service can be downloaded from the Releases section of the repository.
+The latest service can be downloaded from the [Releases](https://github.com/en0l1c/Noviflix_backend/releases/tag/windows)
+section of the repository.
 
 ## Screenshots
 
