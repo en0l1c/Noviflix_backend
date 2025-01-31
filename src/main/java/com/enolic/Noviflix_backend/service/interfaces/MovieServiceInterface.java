@@ -11,50 +11,50 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/api/movies")
-@Tag(name = "Movies", description = "Movie management APIs")
+//@RequestMapping("/api/movies")
+//@Tag(name = "Movies", description = "Movie management APIs")
 public interface MovieServiceInterface {
-
-    @GetMapping
-    @Operation(summary = "Get all movies", description = "Returns a list of all available movies.")
-    @GetAllMoviesResponses
-    @ServerErrorResponses
+/** MovieServiceInterface and Service layer in general is not related with API, so the Annotation were wrong here **/
+//    @GetMapping
+//    @Operation(summary = "Get all movies", description = "Returns a list of all available movies.")
+//    @GetAllMoviesResponses
+//    @ServerErrorResponses
     List<MovieDTO> getAllMovies();
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Get movie by ID", description = "Fetches a movie based on the provided ID.")
-    @GetMovieByIdResponses
-    @ServerErrorResponses
+//    @GetMapping("/{id}")
+//    @Operation(summary = "Get movie by ID", description = "Fetches a movie based on the provided ID.")
+//    @GetMovieByIdResponses
+//    @ServerErrorResponses
     MovieDTO getMovieById(@PathVariable UUID id);
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Add a new movie", description = "Adds a new movie to the database.")
-    @AddMovieResponses
-    @ServerErrorResponses
+//    @PostMapping
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @Operation(summary = "Add a new movie", description = "Adds a new movie to the database.")
+//    @AddMovieResponses
+//    @ServerErrorResponses
     MovieDTO addMovie(@Valid @RequestBody MovieDTO movieDTO);
 
-    @PutMapping("/{id}")
-    @Operation(summary = "Update a movie", description = "Updates the details of an existing movie.")
-    @UpdateMovieResponses
-    @ServerErrorResponses
+//    @PutMapping("/{id}")
+//    @Operation(summary = "Update a movie", description = "Updates the details of an existing movie.")
+//    @UpdateMovieResponses
+//    @ServerErrorResponses
     MovieDTO updateMovie(@PathVariable UUID id, @Valid @RequestBody MovieDTO updatedMovie);
 
-    @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a movie", description = "Deletes a movie from the database using its unique ID.")
-    @DeleteMovieResponses
-    @ServerErrorResponses
+//    @DeleteMapping("/{id}")
+//    @Operation(summary = "Delete a movie", description = "Deletes a movie from the database using its unique ID.")
+//    @DeleteMovieResponses
+//    @ServerErrorResponses
     String deleteMovie(@PathVariable UUID id);
 
-    @GetMapping("/whatsnext")
-    @Operation(summary = "Get a random movie", description = "Fetches a random movie from the database.")
-    @GetRandomMovieResponses
-    @ServerErrorResponses
+//    @GetMapping("/whatsnext")
+//    @Operation(summary = "Get a random movie", description = "Fetches a random movie from the database.")
+//    @GetRandomMovieResponses
+//    @ServerErrorResponses
     MovieDTO getRandomMovie();
 
-    @PostMapping("/loadmovies")
-    @Operation(summary = "Load hardcoded movies", description = "Loads predefined movies into the database.")
-    @LoadMoviesResponses
-    @ServerErrorResponses
+//    @PostMapping("/loadmovies")
+//    @Operation(summary = "Load hardcoded movies", description = "Loads predefined movies into the database.")
+//    @LoadMoviesResponses
+//    @ServerErrorResponses
     String loadMovies();
 }
