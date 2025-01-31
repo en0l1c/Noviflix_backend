@@ -32,7 +32,7 @@ public class MovieController {
     @GetMovieByIdResponses
     @ServerErrorResponses
     @Operation(summary = "Get movie by ID", description = "Fetches a movie based on the provided ID.")
-    public MovieDTO getMovieById(UUID id) {
+    public MovieDTO getMovieById(@PathVariable UUID id) {
         return movieService.getMovieById(id);
     }
 
@@ -57,7 +57,7 @@ public class MovieController {
     @DeleteMovieResponses
     @ServerErrorResponses
     @Operation(summary = "Delete a movie", description = "Deletes a movie from the database using its unique ID.")
-    public String deleteMovie(UUID id) {
+    public String deleteMovie(@PathVariable UUID id) {
         return movieService.deleteMovie(id);
     }
 
